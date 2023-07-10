@@ -1,0 +1,11 @@
+pipelines:
+  default:
+    - step:
+        name: Sync GitHub Mirror
+        image: alpine/git:latest
+        clone:
+          enabled: false
+        script:
+          - git clone --bare git@bitbucket.org:todo-mudaston/todo-frontend.git
+          - cd todo-frontend.git
+          - git push --mirror git@github.com:mudaston/todo-frontend.git
