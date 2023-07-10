@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint-staged": {
+        "*.(ts|tsx|css)": [
+            "prettier --write"
+        ],
+        "*.(ts|tsx)": [
+            "eslint --fix"
+        ]
   },
   "dependencies": {
     "@types/node": "20.4.1",
@@ -18,5 +24,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.1.6"
+        "lint-staged": "^13.2.3",
   }
 }
