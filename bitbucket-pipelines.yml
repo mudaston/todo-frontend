@@ -6,6 +6,6 @@ pipelines:
         clone:
           enabled: false
         script:
-          - git clone --bare git@bitbucket.org:todo-mudaston/nest-todo-api.git
-          - cd nest-todo-api.git
-          - git push --mirror git@github.com:mudaston/nest-todo-api.git
+          - git clone --bare git@bitbucket.org:todo-mudaston/todo-frontend.git
+          - cd todo-frontend.git
+          - git push --mirror git@github.com:mudaston/todo-frontend.git
