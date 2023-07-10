@@ -1,3 +1,62 @@
 {
-  "extends": "next/core-web-vitals"
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "prettier",
+        "plugin:@typescript-eslint/recommended",
+        "@feature-sliced/eslint-config/rules/import-order/experimental",
+        "@feature-sliced/eslint-config/rules/public-api",
+        "@feature-sliced/eslint-config/rules/layers-slices"
+    ],
+    "plugins": ["react", "react-hooks", "prettier", "@typescript-eslint"],
+    "rules": {
+        "indent": ["error", 4],
+        "linebreak-style": "off",
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+        "semi": ["error", "never"],
+        "no-whitespace-before-property": "error",
+        "no-trailing-spaces": "error",
+        "rest-spread-spacing": ["error", "never"],
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "*", "next": "return" }
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "space-in-parens": ["error", "never"],
+        "no-var": "error",
+        "no-param-reassign": "error",
+        "no-nested-ternary": "error",
+        "no-extra-semi": "error",
+        "no-extra-boolean-cast": "error",
+        "no-labels": "error",
+        "curly": "error",
+        "camelcase": "error",
+        "object-curly-spacing": ["error", "always"],
+        // react
+        "react/react-in-jsx-scope": "off",
+        "jsx-quotes": ["error", "prefer-single"],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/prop-types": "off",
+        // next
+        "@next/next/no-html-link-for-pages": ["error", "src/app"],
+        // ts
+        "@typescript-eslint/no-empty-interface": "off",
+        // import
+        "import/newline-after-import": ["error", { "count": 1 }]
+        // "import/no-internal-modules": [
+        //     "error",
+        //     {
+        //         "forbid": ["./src/app/styles/scss/**"]
+        //     }
+        // ]
+    }
 }
