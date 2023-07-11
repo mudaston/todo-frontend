@@ -1,18 +1,15 @@
 'use client'
-import { AppBar, Typography, Toolbar, Container } from '@mui/material'
-import classnames from 'classnames/bind'
+import { AppBar, Typography, Toolbar } from '@mui/material'
 
-import styles from './header.module.scss'
+import { styles } from './styles'
 
 interface HeaderProps {}
 
 type Props = HeaderProps
 
-const cx = classnames.bind(styles)
-
 const Header: React.FC<Props> = () => {
     return (
-        <AppBar className={cx('header')} position='sticky'>
+        <AppBar position='sticky' sx={styles['header']}>
             <Toolbar>
                 <Typography variant='h6'>Mudastone</Typography>
             </Toolbar>
