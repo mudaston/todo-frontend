@@ -1,5 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { persistStore } from 'redux-persist'
+import {
+    persistStore,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+} from 'redux-persist'
 import thunk from 'redux-thunk'
 
 import { reducers } from './reducers'
@@ -7,7 +15,21 @@ import { reducers } from './reducers'
 export const store = configureStore({
     reducer: reducers,
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: [thunk],
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [
+                    FLUSH,
+                    REHYDRATE,
+                    PAUSE,
+                    PERSIST,
+                    PURGE,
+                    REGISTER,
+                ],
+            },
+        })
+            .concat(thunk)
+            .concat(todosApi.middleware),
 })
 
 export const persistor = persistStore(store)
