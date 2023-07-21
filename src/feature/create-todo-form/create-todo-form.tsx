@@ -8,7 +8,7 @@ import { removeRedunantSpaces } from '@shared/lib/helpers'
 
 import { createTodoSchema, CreateTodo, todoApi } from '@entities/todo'
 
-import { InputFieldWrapper } from './styles'
+import { InputFieldWrapper, BadgeStyled } from './styles'
 
 const CreateTodoForm = () => {
     const [createTodo] = todoApi.useCreateTodoMutation()
@@ -35,24 +35,30 @@ const CreateTodoForm = () => {
                 name='name'
                 control={control}
                 render={({
-                    field: { onChange, ...field },
+                    field: { onChange, value, ...field },
                     fieldState: { error },
                 }) => (
                     <Box>
                         <InputFieldWrapper>
-                            <TextField
-                                {...field}
-                                placeholder='Todo name'
-                                fullWidth
-                                size='small'
-                                onChange={(e) => {
-                                    const transformedValue =
-                                        removeRedunantSpaces(
-                                            e.currentTarget.value
-                                        )
-                                    onChange(transformedValue)
-                                }}
-                            />
+                            <BadgeStyled
+                                badgeContent={value.length}
+                                color='primary'
+                            >
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    placeholder='Todo name'
+                                    size='small'
+                                    value={value}
+                                    onChange={(e) => {
+                                        const transformedValue =
+                                            removeRedunantSpaces(
+                                                e.currentTarget.value
+                                            ).substring(0, 50)
+                                        onChange(transformedValue)
+                                    }}
+                                />
+                            </BadgeStyled>
                             <Button variant='contained' type='submit'>
                                 Add
                             </Button>
