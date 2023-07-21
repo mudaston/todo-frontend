@@ -6,5 +6,5 @@ export const InputFieldWrapper = styled(Box)`
 `
 
 export const BadgeStyled = styled(Badge)`
-    width: 100%;
+    flex: 1;
 `
