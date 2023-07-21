@@ -1,3 +1,2 @@
-export { store, persistor } from './store'
-export { StoreProvider } from './provider'
-export type { AppDispatch, RootState } from './store'
+export { wrapper, store } from './store'
+export type { AppDispatch, RootState, AppStore } from './store'
