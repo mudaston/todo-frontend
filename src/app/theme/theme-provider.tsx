@@ -4,13 +4,12 @@ import {
     CssBaseline,
     createTheme,
 } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 import { themeSelector } from '@feature/theme-switcher'
 
-import { useAppSelector } from '@shared/hooks'
-
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-    const theme = useAppSelector(themeSelector)
+    const theme = useSelector(themeSelector)
 
     const MUITheme = createTheme({
         palette: {

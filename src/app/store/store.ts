@@ -1,6 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, Reducer } from '@reduxjs/toolkit'
+import { createWrapper } from 'next-redux-wrapper'
 import {
     persistStore,
+    persistReducer,
     FLUSH,
     REHYDRATE,
     PAUSE,
@@ -8,31 +10,64 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
+
+import { themeSlice } from '@feature/theme-switcher'
+
+import { querySnackbarMiddleware } from '@shared/model/query-snackbar'
+
+import { todoApi } from '@entities/todo'
 
 import { reducers } from './reducers'
 
-export const store = configureStore({
-    reducer: reducers,
-    devTools: process.env.NODE_ENV !== 'production',
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [
-                    FLUSH,
-                    REHYDRATE,
-                    PAUSE,
-                    PERSIST,
-                    PURGE,
-                    REGISTER,
-                ],
-            },
-        })
-            .concat(thunk)
-            .concat(todosApi.middleware),
-})
+const makeConfiguredStore = (reducer: Reducer<ReturnType<typeof reducers>>) =>
+    configureStore({
+        reducer,
+        devTools: process.env.NODE_ENV !== 'production',
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                serializableCheck: {
+                    ignoredActions: [
+                        FLUSH,
+                        REHYDRATE,
+                        PAUSE,
+                        PERSIST,
+                        PURGE,
+                        REGISTER,
+                    ],
+                },
+            }).concat([thunk, todoApi.middleware, querySnackbarMiddleware]),
+    })
 
-export const persistor = persistStore(store)
+export let store: ReturnType<typeof makeConfiguredStore>
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+const makeStore = () => {
+    const isServer = typeof window === 'undefined'
+
+    if (isServer) {
+        return makeConfiguredStore(reducers)
+    }
+
+    const persistConfig = {
+        key: 'persist',
+        whitelist: [themeSlice.name],
+        storage,
+    }
+
+    const persistedReducer = persistReducer(persistConfig, reducers)
+
+    // @ts-expect-error EmptyObject
+    store = makeConfiguredStore(persistedReducer)
+
+    // @ts-expect-error nasty fucking hack for fucking nasty redux persistor
+    store.__persistor = persistStore(store)
+
+    return store
+}
+
+export type AppStore = ReturnType<typeof makeStore>
+export type RootState = ReturnType<AppStore['getState']>
+export type AppDispatch = AppStore['dispatch']
+
+export const wrapper = createWrapper<AppStore>(makeStore)
