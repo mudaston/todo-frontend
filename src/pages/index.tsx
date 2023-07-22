@@ -1,4 +1,4 @@
-import { Container } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 
@@ -19,7 +19,9 @@ export default function Home() {
             </Head>
             <main>
                 <Container sx={{ marginTop: '100px' }}>
-                    <CreateTodoForm />
+                    <Box display='flex' gap='20px'>
+                        <CreateTodoForm />
+                    </Box>
                     <TodoList todos={data || []} />
                 </Container>
             </main>

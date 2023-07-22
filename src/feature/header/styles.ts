@@ -1,4 +1,5 @@
-import { SxProps } from '@mui/material'
+import { SxProps, styled } from '@mui/material'
+import Link from 'next/link'
 
 export const styles: {
     [key: string]: SxProps
@@ -14,3 +15,7 @@ export const styles: {
                         )`,
     },
 }
+
+export const LinkStyled = styled(Link)`
+    text-decoration: none;
+`

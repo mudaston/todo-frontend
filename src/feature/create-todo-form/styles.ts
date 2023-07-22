@@ -8,3 +8,7 @@ export const InputFieldWrapper = styled(Box)`
 export const BadgeStyled = styled(Badge)`
     flex: 1;
 `
+
+export const Form = styled('form')`
+    width: 100%;
+`
