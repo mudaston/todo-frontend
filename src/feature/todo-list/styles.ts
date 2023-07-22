@@ -1,4 +1,4 @@
-import { styled, ListItem, Typography } from '@mui/material'
+import { styled, ListItem, Input } from '@mui/material'
 
 export const TodoItem = styled(ListItem, {
     shouldForwardProp: (prop) => prop !== 'completed',
@@ -14,6 +14,6 @@ export const TodoItem = styled(ListItem, {
 `
 )
 
-export const TodoName = styled(Typography)`
+export const TodoName = styled(Input)`
     flex: 1;
 `

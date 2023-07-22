@@ -8,7 +8,7 @@ import { removeRedunantSpaces } from '@shared/lib/helpers'
 
 import { createTodoSchema, CreateTodo, todoApi } from '@entities/todo'
 
-import { InputFieldWrapper, BadgeStyled } from './styles'
+import { InputFieldWrapper, BadgeStyled, Form } from './styles'
 
 const CreateTodoForm = () => {
     const [createTodo] = todoApi.useCreateTodoMutation()
@@ -30,7 +30,7 @@ const CreateTodoForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(submitHandler)}>
+        <Form onSubmit={handleSubmit(submitHandler)}>
             <Controller
                 name='name'
                 control={control}
@@ -71,7 +71,7 @@ const CreateTodoForm = () => {
                     </Box>
                 )}
             />
-        </form>
+        </Form>
     )
 }
 
