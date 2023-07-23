@@ -1,4 +1,9 @@
-import { SnackbarProvider, enqueueSnackbar, closeSnackbar } from 'notistack'
+import {
+    SnackbarProvider,
+    enqueueSnackbar,
+    closeSnackbar,
+    SnackbarKey,
+} from 'notistack'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -16,7 +21,7 @@ const QuerySnackbar = ({ children }: { children: React.ReactNode }) => {
         const variant = error ? 'error' : 'success'
 
         for (const text of message) {
-            const key = enqueueSnackbar(text, {
+            const key: SnackbarKey = enqueueSnackbar(text, {
                 variant,
                 SnackbarProps: {
                     onClick: () => closeSnackbar(key),

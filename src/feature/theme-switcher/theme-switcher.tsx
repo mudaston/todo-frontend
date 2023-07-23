@@ -1,4 +1,3 @@
-'use client'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import WbSunnyIcon from '@mui/icons-material/WbSunny'
 import { IconButton } from '@mui/material'

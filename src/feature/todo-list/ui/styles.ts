@@ -14,6 +14,6 @@ export const TodoItem = styled(ListItem, {
 `
 )
 
-export const TodoName = styled(Input)`
+export const TodoNameStyles = styled(Input)`
     flex: 1;
 `

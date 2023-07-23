@@ -15,24 +15,28 @@ function App({ Component, ...rest }: AppProps) {
     const { pageProps } = props
 
     return (
-        <Provider store={store}>
-            {/* @ts-expect-error nasty fucking hack for fucking nasty redux persistor */}
-            <PersistGate persistor={store.__persistor}>
-                <ThemeProvider>
-                    <RootLayout>
-                        <Head>
-                            <meta
-                                name='viewport'
-                                content='width=device-width, initial-scale=1'
-                            />
-                        </Head>
-                        <QuerySnackbar>
-                            <Component {...pageProps} />
-                        </QuerySnackbar>
-                    </RootLayout>
-                </ThemeProvider>
-            </PersistGate>
-        </Provider>
+        <>
+            <Provider store={store}>
+                {/* @ts-expect-error nasty fucking hack for fucking nasty redux persistor */}
+                <PersistGate persistor={store.__persistor}>
+                    {() => (
+                        <ThemeProvider>
+                            <RootLayout>
+                                <Head>
+                                    <meta
+                                        name='viewport'
+                                        content='width=device-width, initial-scale=1'
+                                    />
+                                </Head>
+                                <QuerySnackbar>
+                                    <Component {...pageProps} />
+                                </QuerySnackbar>
+                            </RootLayout>
+                        </ThemeProvider>
+                    )}
+                </PersistGate>
+            </Provider>
+        </>
     )
 }
 

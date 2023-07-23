@@ -7,7 +7,8 @@ import { useSuccessMessage } from '@shared/hooks'
 
 import { todoApi, Todo } from '@entities/todo'
 
-import { TodoItem, TodoName } from './styles'
+import { TodoItem } from './styles'
+import TodoName from './todo-name'
 
 interface TodoListProps {
     todos: Todo[]
@@ -18,10 +19,6 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
     const [deleteTodo] = todoApi.useDeleteTodoMutation()
     const [updateTodo] = todoApi.useUpdateTodoMutation()
 
-    const [todosModified, setTodosModified] = useState(
-        todos.map((todo) => ({ ...todo, disabled: true }))
-    )
-
     const updateTodoCompleteStatus = debounce(
         async (state: boolean, id: number) => {
             updateTodo({
@@ -29,7 +26,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
                 completed: state,
             })
         },
-        300
+        200
     )
 
     const deleteTodoHandler = debounce(async (id) => {
@@ -38,20 +35,9 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
         enqueueMessage('Todo deleted successfully!')
     }, 300)
 
-    const editTodoName = (id: number) => {
-        const todo = todosModified.findIndex((todo) => todo.id === id)
-        todosModified[todo].disabled = false
-
-        setTodosModified([...todosModified])
-    }
-
-    useEffect(() => {
-        setTodosModified(todos.map((todo) => ({ ...todo, disabled: true })))
-    }, [todos])
-
     return (
         <List>
-            {todosModified?.map(({ id, name, completed, disabled }) => (
+            {todos?.map(({ id, name, completed }) => (
                 <TodoItem key={id} completed={completed}>
                     <Checkbox
                         checked={completed}
@@ -59,11 +45,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
                             updateTodoCompleteStatus(e.target.checked, id)
                         }
                     />
-                    <TodoName
-                        disabled={disabled}
-                        value={name}
-                        onDoubleClick={() => editTodoName(id)}
-                    />
+                    <TodoName key={id} id={id} todoName={name} />
                     <IconButton onClick={() => deleteTodoHandler(id)}>
                         <DeleteForever color='error' />
                     </IconButton>

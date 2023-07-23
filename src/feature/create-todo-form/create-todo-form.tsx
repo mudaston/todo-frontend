@@ -17,11 +17,16 @@ const CreateTodoForm = () => {
     const { handleSubmit, control, resetField, reset } = useForm<CreateTodo>({
         resolver: zodResolver(createTodoSchema),
         mode: 'onSubmit',
-        defaultValues: { name: '' },
+        defaultValues: {
+            name: '',
+        },
     })
 
     const submitHandler: SubmitHandler<CreateTodo> = async (data) => {
-        await createTodo({ authorId: 1, ...data }).unwrap()
+        await createTodo({
+            authorId: 1,
+            ...data,
+        }).unwrap()
 
         enqueueMessage('Todo created successfully!')
 
@@ -62,9 +67,15 @@ const CreateTodoForm = () => {
                             <Button variant='contained' type='submit'>
                                 Add
                             </Button>
+                            <div>awdawdawd</div>
                         </InputFieldWrapper>
                         {error && (
-                            <FormHelperText error sx={{ display: 'flex' }}>
+                            <FormHelperText
+                                error
+                                sx={{
+                                    display: 'flex',
+                                }}
+                            >
                                 {error.message}
                             </FormHelperText>
                         )}
